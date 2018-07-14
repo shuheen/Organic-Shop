@@ -1,0 +1,34 @@
+<div class="row">
+  <div class="col-3" *ngFor="let movie of movies | async">
+    <div class="card mb-4 box-shadow">
+      <img class="card-img-top" data-src="" data-holder-rendered="true">
+      <div class="card-body">
+        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="btn-group">
+            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+          </div>
+          <small class="text-muted">9 mins</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="1000"
+  (scrolled)="onScroll()">
+</div>
+
+<div *ngIf="!finished">
+ Loading more movies...
+</div>
+
+
+<div *ngIf="finished">
+  End of database... That's all folks!
+</div>

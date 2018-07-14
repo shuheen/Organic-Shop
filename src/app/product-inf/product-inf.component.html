@@ -1,0 +1,43 @@
+
+    <p>
+        <a routerLink="/admin/product-form" class="btn btn-primary">Add Product</a>
+    </p>
+    <p>
+      <input type="text" class="form-control" placeholder="Search" #searchQuery (keyup)="filter(searchQuery.value)">
+    </p>
+<div class="row">
+  <div class="col-3" *ngFor="let product of movies | async">
+    <div class="card mb-4 box-shadow">
+      <img class="card-img-top" data-src="{{product.imageUrl}}" data-holder-rendered="true">
+      <div class="card-body">
+        <h6 class="bold-text">{{product.title}}</h6>
+        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="btn-group">
+              <a [routerLink]="['/admin/admin-products/' , product.$key]" class="btn btn-sm btn-primary btn-outline-primary">Edit</a>
+            <!-- <button type="button" class="btn btn-sm btn-primary btn-outline-primary">Edit</button> -->
+            <button type="button" class="btn btn-sm btn-outline-danger">Delete</button>
+          </div>
+          <small class="text-muted bold-text">{{ product.price | currency:'USD':true}}</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="1000"
+  (scrolled)="onScroll()">
+</div>
+
+<div *ngIf="!finished">
+ Loading more Products...
+</div>
+
+
+<div *ngIf="finished">
+ That's all. Products list Ended
+</div>

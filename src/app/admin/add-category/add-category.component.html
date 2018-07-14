@@ -1,0 +1,10 @@
+<form #addCategoryForm="ngForm" (ngSubmit)="addCategory(addCategoryForm.form.value)">
+  <input class="form-control" [appInputFormat]="'lowercase'" ngModel name="category"  #category="ngModel" placeholder="Category Name" required>
+  <small *ngIf="category.touched && category.invalid" class="form-text text-danger">
+    This field is required
+  </small>
+
+  <button class="btn btn-success" [disabled]="!addCategoryForm.form.valid">Save</button>
+</form>
+
+<!-- <input  type="text"> -->

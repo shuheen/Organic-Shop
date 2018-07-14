@@ -1,0 +1,153 @@
+<h4 class="mb-3">Billing address</h4>
+<form class="needs-validation" #shippingForm="ngForm" (ngSubmit)="proceed(shippingForm.form.value)">
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <label for="firstName">First name</label>
+      <input type="text" class="form-control" id="firstName" name="firstName" ngModel #firstName="ngModel" required>
+      <small class="form-text text-danger" *ngIf="firstName.touched && firstName.invalid">
+        First Name is required.
+      </small>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="lastName">Last name</label>
+      <input type="text" class="form-control" id="lastName" name="lastName" ngModel #lastName="ngModel" required>
+      <small class="form-text text-danger" *ngIf="lastName.touched && lastName.invalid">
+        Last Name is required.
+      </small>
+    </div>
+  </div>
+
+  <!-- <div class="mb-3">
+            <label for="username">Username</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">@</span>
+              </div>
+              <input type="text" class="form-control" id="username" placeholder="Username" required>
+              <div class="invalid-feedback" style="width: 100%;">
+                Your username is required.
+              </div>
+            </div>
+          </div> -->
+
+  <div class="mb-3">
+    <label for="email">Email
+      <span class="text-muted"></span>
+    </label>
+    <input type="email" class="form-control" id="email" placeholder="you@example.com" required name="email" #email="ngModel"
+      ngModel email>
+    <small id="emailHelp" *ngIf="email.touched && email.invalid" class="form-text text-danger">
+      <span *ngIf="email.errors.required">Email is Required</span>
+      <span *ngIf="email.errors.email">Invalid Email</span>
+    </small>
+  </div>
+
+  <div class="mb-3">
+    <label for="address">House Number, Street, City</label>
+    <input type="text" class="form-control" id="address" placeholder="Ex: 1234 Main St" required name="address" #address="ngModel"
+      ngModel>
+    <small class="form-text text-danger" *ngIf="address.touched && address.invalid">
+      Address is required.
+    </small>
+  </div>
+
+  <div class="mb-3">
+    <label for="address2">Address 2
+      <span class="text-muted">(Optional)</span>
+    </label>
+    <input type="text" class="form-control" id="address2" ngModel #address2="ngModel" name="address2" placeholder="Apartment or suite">
+  </div>
+
+  <div class="row">
+    <div class="col-md-5 mb-3">
+      <label for="country">Country</label>
+      <select class="custom-select d-block w-100" name="country" [(ngModel)]="countrySelected" id="country" required name="country"
+        #country="ngModel" (change)="getStates(countrySelected)">
+        <option value="">Choose...</option>
+        <option *ngFor="let country of countries$ | async" [value]="country.$key">{{ country.$key }}</option>
+      </select>
+      <small class="form-text text-danger" *ngIf="country.touched && country.invalid">
+        Country is required.
+      </small>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="state">State</label>
+      <select class="custom-select d-block w-100" id="state" [(ngModel)]="stateSelected" required name="state" #state="ngModel"
+        [disabled]="!states$">
+        <option *ngFor="let states of states$ | async" [value]="states.$value">{{ states.$value }}</option>
+      </select>
+      <small class="form-text text-danger" *ngIf="state.touched && state.invalid">
+        State is required.
+      </small>
+    </div>
+    <div class="col-md-3 mb-3">
+      <label for="zip">Zip</label>
+      <input type="text" class="form-control" id="zip" placeholder="" required name="zip" #zip="ngModel" ngModel>
+      <small class="form-text text-danger" *ngIf="zip.touched && zip.invalid">
+        Zip Code is required.
+      </small>
+    </div>
+  </div>
+  <!-- <hr class="mb-4">
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="same-address">
+            <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="save-info">
+            <label class="custom-control-label" for="save-info">Save this information for next time</label>
+          </div>
+          <hr class="mb-4">
+
+          <h4 class="mb-3">Payment</h4>
+
+          <div class="d-block my-3">
+            <div class="custom-control custom-radio">
+              <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="" required>
+              <label class="custom-control-label" for="credit">Credit card</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required>
+              <label class="custom-control-label" for="debit">Debit card</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
+              <label class="custom-control-label" for="paypal">PayPal</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="cc-name">Name on card</label>
+              <input type="text" class="form-control" id="cc-name" placeholder="" required>
+              <small class="text-muted">Full name as displayed on card</small>
+              <div class="invalid-feedback">
+                Name on card is required
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="cc-number">Credit card number</label>
+              <input type="text" class="form-control" id="cc-number" placeholder="" required>
+              <div class="invalid-feedback">
+                Credit card number is required
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3 mb-3">
+              <label for="cc-expiration">Expiration</label>
+              <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
+              <div class="invalid-feedback">
+                Expiration date required
+              </div>
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="cc-cvv">CVV</label>
+              <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
+              <div class="invalid-feedback">
+                Security code required
+              </div>
+            </div>
+          </div> -->
+  <hr class="mb-4">
+  <button class="btn btn-primary btn-lg btn-block" [disabled]="!shippingForm.form.valid">Continue to checkout</button>
+</form>

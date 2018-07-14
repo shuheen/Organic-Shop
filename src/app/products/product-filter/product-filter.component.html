@@ -1,0 +1,12 @@
+<div class="sticky-top">
+  <div class="card">
+    <div class="card-header">
+      Categories
+    </div>
+    <div class="list-group list-group-flush">
+      <a routerLink="/" class="list-group-item list-group-item=action" [class.active]="!category">All Categories</a>
+      <a routerLink="/" [queryParams]="{category: c.$key}" class="list-group-item list-group-item=action" [class.active]="category === c.$key"
+        *ngFor="let c of categories$ | async">{{ c.name | capitalize }}</a>
+    </div>
+  </div>
+</div>
