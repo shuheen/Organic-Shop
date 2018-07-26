@@ -1,3 +1,19 @@
-.dropdown-toggle{
-    cursor: pointer;
+.dropdown-toggle {
+  cursor: pointer;
+}
+.loc-contianer {
+  position: relative;
+}
+.nav-location {
+  width: 100%;
+  border-radius: 5px;
+  background-color: #948c9e3b;
+  color: rgb(41, 41, 41);
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+.lm-btn {
+  position: absolute;
+  top: 4px;
+  right: 19px;
 }
